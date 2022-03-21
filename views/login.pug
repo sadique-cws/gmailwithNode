@@ -1,0 +1,23 @@
+extends base.pug
+
+block content 
+    .container.mt-2
+        .row 
+            .col-5.mx-auto 
+                .card 
+                    .card-body 
+                        h6.lead.mb-0 Login Here
+                        p.small.mb-0 All fields are Required
+                        hr
+                        form(action="", method="post")
+                            .row 
+                                .mb-3.col
+                                    label(for="") email
+                                    input.form-control(type="text",name="email") 
+                            .row 
+                                .mb-3
+                                    label(for="") Password 
+                                    input.form-control(type="password",name="password")
+                            .row 
+                                input.btn.btn-success.w100(type="text",name="send",value="Login Here")
+                                 

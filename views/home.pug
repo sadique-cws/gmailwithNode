@@ -1,0 +1,60 @@
+extends base.pug
+
+block content 
+    .container.mt-2
+        .row 
+            .col-7
+                .container-fluid(style="background-color:var(--bs-gray-300)").text-dark.p-3
+                    h2.display-6 Welcome in New Gmail 
+                    h6 100% create, your can connection with anyone worldwide
+                    p.small Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, dignissimos labore veritatis officia cupiditate, eius ipsum repellendus nemo molestiae quisquam ea nam cum magni voluptatibus nesciunt. Quibusdam repudiandae in alias?
+
+            .col-5 
+                .card 
+                    .card-body 
+                        h6.lead.mb-0 Create An Account 
+                        p.small.mb-0 100% free 
+                        hr
+                        form(action="", method="post")
+                            .row 
+                                .mb-3.col
+                                    label(for="") Firstname 
+                                    input.form-control(type="text",name="firstname") 
+                                .mb-3.col
+                                    label(for="") lastname 
+                                    input.form-control(type="text",name="lastname") 
+                            .row 
+                                .mb-3.col
+                                    label(for="") contact 
+                                    input.form-control(type="text",name="contact") 
+                            .row 
+                                .mb-3.col
+                                    label(for="") email
+                                    .input-group 
+                                        input.form-control(type="text",name="email") 
+                                        span.input-group-text @gmail.com
+                            .row 
+                                .mb-3.col 
+                                    label(for="") Date of Birth 
+                                    input.form-control(type="date",name="dob")
+                            .row 
+                                .mb-3.col.d-flex
+                                    .m-1 
+                                        input(type="radio",name="gender").form-check-input.me-1 
+                                        label(for="").form-check-label male 
+                                    .m-1 
+                                        input(type="radio",name="gender").form-check-input.me-1  
+                                        label(for="").form-check-label female 
+                                    .m-1 
+                                        input(type="radio",name="gender").form-check-input.me-1 
+                                        label(for="").form-check-label other
+                            .row 
+                                .mb-3.col
+                                    label(for="") Password 
+                                    input.form-control(type="password",name="password")
+                                .mb-3.col
+                                    label(for="") confirm Password 
+                                    input.form-control(type="password",name="cnf_password")
+                            .row 
+                                input.btn.btn-success.w100(type="text",name="send")
+                                 
