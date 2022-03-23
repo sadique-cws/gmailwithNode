@@ -15,14 +15,20 @@ block content
                         h6.lead.mb-0 Create An Account 
                         p.small.mb-0 100% free 
                         hr
+                        if (messages.info)
+                            .alert.alert-info
+                                span= messages.info
+                        if (messages.danger)
+                            .alert.alert-danger
+                                span= messages.danger
                         form(action="", method="post")
                             .row 
                                 .mb-3.col
                                     label(for="") Firstname 
-                                    input.form-control(type="text",name="firstname") 
+                                    input.form-control(type="text",name="fname") 
                                 .mb-3.col
                                     label(for="") lastname 
-                                    input.form-control(type="text",name="lastname") 
+                                    input.form-control(type="text",name="lname") 
                             .row 
                                 .mb-3.col
                                     label(for="") contact 
@@ -40,13 +46,13 @@ block content
                             .row 
                                 .mb-3.col.d-flex
                                     .m-1 
-                                        input(type="radio",name="gender").form-check-input.me-1 
+                                        input(type="radio",name="gender" ,value="male").form-check-input.me-1 
                                         label(for="").form-check-label male 
                                     .m-1 
-                                        input(type="radio",name="gender").form-check-input.me-1  
+                                        input(type="radio",name="gender",value="female").form-check-input.me-1  
                                         label(for="").form-check-label female 
                                     .m-1 
-                                        input(type="radio",name="gender").form-check-input.me-1 
+                                        input(type="radio",name="gender",value="other").form-check-input.me-1 
                                         label(for="").form-check-label other
                             .row 
                                 .mb-3.col
@@ -56,5 +62,5 @@ block content
                                     label(for="") confirm Password 
                                     input.form-control(type="password",name="cnf_password")
                             .row 
-                                input.btn.btn-success.w100(type="text",name="send")
+                                input.btn.btn-success.w-100(type="submit")
                                  
