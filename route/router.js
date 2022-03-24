@@ -1,6 +1,7 @@
 var express = require("express");
 const { body, validationResult, check } = require('express-validator');
-const { HomePage,Login, Signup } = require("../controllers/AccountController");
+const { HomePage,Login, Signup, loginAction } = require("../controllers/AccountController");
+const {Inbox}  = require("../controllers/GmailController");
 var router = express.Router()
 
 
@@ -12,6 +13,12 @@ router.post("/",[
 ],Signup);
 
 router.get("/login",Login);
+router.post("/login",loginAction);
+
+
+router.get("/inbox",Inbox);
+
+
 
 
 module.exports = router

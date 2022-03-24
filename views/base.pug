@@ -12,9 +12,13 @@ html(lang="en")
                 a.navbar-brand(href="") Gmail 
 
                 ul.navbar-nav
-                    li.nav-item 
-                        a.nav-link(href="/").btn.btn-light.me-2.text-dark Create An Account  
-                    li.nav-item 
-                        a.nav-link(href="/login").btn.btn-light.text-dark Login
+                    if session.user                    
+                        li.nav-item 
+                            a.nav-link(href="/login").btn.btn-light.text-dark logout
+                    else 
+                        li.nav-item 
+                            a.nav-link(href="/").btn.btn-light.me-2.text-dark Create An Account  
+                        li.nav-item 
+                            a.nav-link(href="/login").btn.btn-light.text-dark Login
 
         block content

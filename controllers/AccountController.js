@@ -5,6 +5,21 @@ const HomePage = (req,res) =>{
     return res.render("home")
 }
 
+const loginAction = async(req,res) => {
+    email = req.body.email;
+    password = req.body.password;
+
+    var account = await AccountModels.findOne({email:email,password:password})
+
+    if(account.email === email && account.password === password){
+        req.session.user = account._id;
+        res.redirect("/inbox");
+    }
+    else{
+        req.flash("danger","username or password is Incorrect");
+    }
+}
+
 const Signup = async (req,res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -26,6 +41,8 @@ const Signup = async (req,res) => {
                 password : req.body.password,
             });
             account.save();
+            res.redirect("/");
+            
         }
         else{
             req.flash('info', 'Email or contact already exits');
@@ -37,7 +54,7 @@ const Signup = async (req,res) => {
         
     }
 
-    res.redirect("/");
+   
 }
 const Login = (req,res) =>{
     return res.render("login")
@@ -48,4 +65,5 @@ module.exports = {
     HomePage,
     Login,
     Signup,
+    loginAction,
 }
