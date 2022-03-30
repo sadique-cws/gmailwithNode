@@ -12,7 +12,8 @@ block content
                         tr 
                             td=mail.senderId.fname
                             td
-                                strong=mail.subject
-                                    span.small.fw-lighter.ms-2=mail.content
+                                a(href=`/view/${mail._id}`).text-decoration-none.text-dark
+                                    strong=mail.subject
+                                    span.small.fw-lighter.ms-2=mail.content 
                             td=mail.date
                 

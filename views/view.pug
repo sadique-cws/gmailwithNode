@@ -1,0 +1,24 @@
+extends base.pug 
+
+block content 
+    .container-fluid.mt-4
+        .row    
+            .col-2 
+               include side.pug
+            .col-10
+                .row.mt-5 
+                    .col-8 
+                        h3=mail.subject
+                    .col-4 
+                        if mail.status == -1
+                            a.btn.btn-danger.btn-sm(href="") Undo
+                        else 
+                            a.btn.btn-danger.btn-sm(href=`/move-to-trash/${mail._id}`) Move to trash
+                        
+                h6 to: #{mail.recieverId.fname}
+                h6 From : #{mail.senderId.fname}
+                small.text-muted=mail.date
+                p.lead=mail.content
+
+                
+                

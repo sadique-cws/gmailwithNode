@@ -15,14 +15,14 @@ async function CountData(req,res){
 async function Inbox(req,res){
     sessionId = req.session.user;
     [countInbox,countOutbox,countTrash,countDraft] = await CountData(req,res);
-    var inboxMail = await MailModels.find({recieverId:sessionId}).populate("senderId")
+    var inboxMail = await MailModels.find({recieverId:sessionId,status:1}).populate("senderId")
     return res.render("inbox",{"mails":inboxMail,"countInbox":countInbox,"countOutbox":countOutbox,"countTrash":countTrash,"countDraft":countDraft})
    
 }
 async function OutBox(req,res){
     sessionId = req.session.user;
     [countInbox,countOutbox,countTrash,countDraft] = await CountData(req,res);
-    var inboxMail = await MailModels.find({senderId:sessionId}).populate("recieverId")
+    var inboxMail = await MailModels.find({senderId:sessionId,status:1}).populate("recieverId")
     return res.render("outbox",{"mails":inboxMail,"countInbox":countInbox,"countOutbox":countOutbox,"countTrash":countTrash,"countDraft":countDraft})
 }
 async function draft(req,res){
@@ -38,17 +38,44 @@ async function trash(req,res){
     return res.render("trash",{"mails":inboxMail,"countInbox":countInbox,"countOutbox":countOutbox,"countTrash":countTrash,"countDraft":countDraft})
 }
 
+async function viewMail(req,res){
+    var id = req.params.id;
+    [countInbox,countOutbox,countTrash,countDraft] = await CountData(req,res);
+    var singleMail = await MailModels.findById(id).populate("senderId").populate("recieverId");
+    return res.render("view",{"mail":singleMail,"countInbox":countInbox,"countOutbox":countOutbox,"countTrash":countTrash,"countDraft":countDraft});
+}
+async function moveToTrash(req,res){
+    var id = req.params.id;
+    await MailModels.findOneAndUpdate({_id:id},{status:-1}).exec(function(error,response){
+        if(error){
+            return error;
+        }
+       else{
+            return res.redirect("/trash");
+       }
+    });
+
+}
+
 async function compose(req,res){
     recieverData = await AccountModels.findOne({email:req.body.to})
     senderId = req.session.user;
     console.log(senderId);
+    var status;
+
+    if(req.body.save){
+        status = 0;
+    }
+    else{
+        status = 1;
+    }
 
     var mailInsert = new MailModels({
         senderId: senderId,
         recieverId : recieverData._id,
         subject :  req.body.subject,
         content : req.body.content,
-        status: 1,
+        status: status,
         date: new Date(),
     });
 
@@ -64,5 +91,7 @@ module.exports = {
     OutBox,
     draft,
     trash,
+    viewMail,
+    moveToTrash,
 
 }

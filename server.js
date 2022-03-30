@@ -20,9 +20,11 @@ app.use(flash());
 
 app.use(session({
     secret:"ayush kamchor he",
-    resave:false,
-    saveUninitialized:false,
-    cookie:{secure:false}
+    resave:true,
+    saveUninitialized:true,
+    cookie:{
+        maxAge:24 * 60 * 60 * 1000,
+    }
 }))
 var router = require('./route/router')
 
