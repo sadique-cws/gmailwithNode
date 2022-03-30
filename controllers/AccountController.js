@@ -1,5 +1,6 @@
 const AccountModels = require("../models/AccountsModel")
 const { body, validationResult } = require('express-validator');
+const { redirect } = require("express/lib/response");
 
 const HomePage = (req,res) =>{
     return res.render("home")
@@ -60,10 +61,16 @@ const Login = (req,res) =>{
     return res.render("login")
 }
 
+const Logout = (req,res) => {
+   req.session.destroy();
+   return res.redirect("/login");
+}
+
 
 module.exports = {
     HomePage,
     Login,
     Signup,
     loginAction,
+    Logout,
 }

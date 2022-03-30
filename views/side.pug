@@ -1,12 +1,26 @@
-a.btn.btn-danger.btn-lg.w-100.m-2.rounded-pill.shadow-lg(href="") Compose
+a.btn.btn-danger.btn-lg.w-100.m-2.rounded-pill.shadow-lg(href="#composeModal",data-bs-toggle="modal") Compose
 .list-group.mt-3.small
-    a.list-group-item.list-group-item-action(href="") Inbox
-        span.float-end (2)  
-    a.list-group-item.list-group-item-action(href="") Outbox
-        span.float-end (5)  
-    a.list-group-item.list-group-item-action(href="") Draft
-        span.float-end (7)  
-    a.list-group-item.list-group-item-action(href="") Sent Mail
-        span.float-end (2)  
-    a.list-group-item.list-group-item-action(href="") Trash
-        span.float-end (1)  
+    a.list-group-item.list-group-item-action(href="/inbox") Inbox
+        span.float-end (#{countInbox})  
+    a.list-group-item.list-group-item-action(href="/outbox") Outbox
+        span.float-end (#{countOutbox})   
+    a.list-group-item.list-group-item-action(href="/draft") Draft
+        span.float-end (#{countDraft})      
+    a.list-group-item.list-group-item-action(href="/trash") Trash
+        span.float-end (#{countTrash})  
+
+.modal.fade#composeModal 
+    .modal-dialog
+        .modal-content 
+            .modal-header Send Mail 
+            .modal-body 
+                form(action="/compose",method="post")
+                    .mb-3 
+                        input.form-control(type="text",placeholder="To.",name="to") 
+                    .mb-3 
+                        input.form-control(type="text",placeholder="Subject",name="subject")
+                    .mb-3 
+                        textarea(name="content", cols="30", rows="10").form-control
+                    .mb-3   
+                        input.btn.btn-success.float-end(type="submit",value="Send")                        
+                        input.btn.btn-info.me-2.float-end(type="submit",value="Save to Draft")

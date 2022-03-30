@@ -12,6 +12,7 @@ app.dynamicHelpers({session:function(req,res){
 }})
 
 connect
+
 app.use(express.json());
 app.use(urLencoded)
 app.use(flash());

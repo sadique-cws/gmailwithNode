@@ -6,11 +6,11 @@ block content
             .col-2 
                include side.pug
             .col-10
-                h4.mt-2 Inbox
+                h4.mt-2 Outbox Mail
                 table.table.table-sm.small
                     each mail in mails
                         tr 
-                            td=mail.senderId.fname
+                            td=mail.recieverId.fname
                             td
                                 strong=mail.subject
                                     span.small.fw-lighter.ms-2=mail.content
