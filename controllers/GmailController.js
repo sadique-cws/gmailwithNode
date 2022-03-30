@@ -54,7 +54,6 @@ async function moveToTrash(req,res){
             return res.redirect("/trash");
        }
     });
-
 }
 
 async function compose(req,res){
