@@ -1,0 +1,28 @@
+extends base.pug 
+
+block content 
+    .container-fluid.mt-4
+        .row    
+            .col-2 
+               include side.pug
+            .col-10
+                h4.mt-2 All Mails
+                table.table.table-sm.small
+                    each mail in mails
+                        tr 
+                            td=mail.senderId.fname
+                            td
+                                if mail.status==0
+                                    span.bg-info.badge.rounded-pill.text-dark Draft
+                                else if mail.status == -1
+                                    span.bg-danger.badge.rounded-pill Trash
+                                else if mail.status == 1 && mail.senderId._id == session.user
+                                    span.bg-success.badge.rounded-pill Outbox
+                                else if mail.status == 1 && mail.recieverId._id == session.user
+                                    span.bg-primary.badge.rounded-pill Inbox
+                            td
+                                a(href=`/view/${mail._id}`).text-decoration-none.text-dark
+                                    strong=mail.subject
+                                    span.small.fw-lighter.ms-2=mail.content 
+                            td=moment(mail.date).fromNow()
+                

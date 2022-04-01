@@ -11,13 +11,14 @@ block content
                         h3=mail.subject
                     .col-4 
                         if mail.status == -1
-                            a.btn.btn-danger.btn-sm(href="") Undo
+                            a.btn.btn-success.btn-sm(href=`/undo-from-trash/${mail._id}`) Undo
+                            a.btn.btn-danger.btn-sm.ms-2(href=`/delete-from-trash/${mail._id}`) Delete
                         else 
                             a.btn.btn-danger.btn-sm(href=`/move-to-trash/${mail._id}`) Move to trash
                         
                 h6 to: #{mail.recieverId.fname}
                 h6 From : #{mail.senderId.fname}
-                small.text-muted=mail.date
+                small.text-muted=moment(mail.date).fromNow()
                 p.lead=mail.content
 
                 

@@ -6,21 +6,24 @@ a.btn.btn-danger.btn-lg.w-100.m-2.rounded-pill.shadow-lg(href="#composeModal",da
         span.float-end (#{countOutbox})   
     a.list-group-item.list-group-item-action(href="/draft") Draft
         span.float-end (#{countDraft})      
+    a.list-group-item.list-group-item-action(href="/all-mail") All Mails    
     a.list-group-item.list-group-item-action(href="/trash") Trash
-        span.float-end (#{countTrash})  
+        span.float-end (#{countTrash})
 
 .modal.fade#composeModal 
     .modal-dialog
         .modal-content 
             .modal-header Send Mail 
             .modal-body 
-                form(action="/compose",method="post")
+                form(action="/compose",method="post",enctype="multipart/form-data")
                     .mb-3 
                         input.form-control(type="text",placeholder="To.",name="to") 
                     .mb-3 
                         input.form-control(type="text",placeholder="Subject",name="subject")
                     .mb-3 
                         textarea(name="content", cols="30", rows="10").form-control
+                    .mb-3
+                        input(type="file",name="attachment")
                     .mb-3   
                         input.btn.btn-success.float-end(type="submit",value="Send")                        
                         input.btn.btn-info.me-2.float-end(type="submit",value="Save to Draft" name="save")

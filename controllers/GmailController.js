@@ -1,7 +1,6 @@
 const AccountModels = require("../models/AccountsModel");
 const MailModels = require("../models/MailModels");
 
-
 async function CountData(req,res){
     sessionId = req.session.user;
     var countInbox = await MailModels.countDocuments({recieverId:sessionId,status:1})
@@ -17,6 +16,13 @@ async function Inbox(req,res){
     [countInbox,countOutbox,countTrash,countDraft] = await CountData(req,res);
     var inboxMail = await MailModels.find({recieverId:sessionId,status:1}).populate("senderId")
     return res.render("inbox",{"mails":inboxMail,"countInbox":countInbox,"countOutbox":countOutbox,"countTrash":countTrash,"countDraft":countDraft})
+   
+}
+async function AllMail(req,res){
+    sessionId = req.session.user;
+    [countInbox,countOutbox,countTrash,countDraft] = await CountData(req,res);
+    var allMail = await MailModels.find({$or:[{recieverId:sessionId},{senderId:sessionId}]}).populate("senderId")
+    return res.render("allmail",{"mails":allMail,"countInbox":countInbox,"countOutbox":countOutbox,"countTrash":countTrash,"countDraft":countDraft})
    
 }
 async function OutBox(req,res){
@@ -55,18 +61,48 @@ async function moveToTrash(req,res){
        }
     });
 }
+async function undoFromTrash(req,res){
+    var id = req.params.id;
+    var mailRecord = await MailModels.findById(id);
+    var status = 1;
+    if(mailRecord.lastStatus == 0){
+        status  = mailRecord.lastStatus;
+    }
+    
+    await MailModels.findOneAndUpdate({_id:id},{status:status}).exec(function(error,response){
+        if(error){
+            return error;
+        }
+       else{
+            return res.redirect("/inbox");
+       }
+    });
+}
+async function deleteFromTrash(req,res){
+    var id = req.params.id;
+    await MailModels.findOneAndDelete({_id:id}).exec(function(error,response){
+        if(error){
+            return error;
+        }
+       else{
+            return res.redirect("/inbox");
+       }
+    });
+}
 
 async function compose(req,res){
     recieverData = await AccountModels.findOne({email:req.body.to})
     senderId = req.session.user;
+    file = req.file.filename;
     console.log(senderId);
     var status;
 
     if(req.body.save){
-        status = 0;
+        lastStatus = status = 0;
+        
     }
     else{
-        status = 1;
+        lastStatus = status = 1;
     }
 
     var mailInsert = new MailModels({
@@ -75,6 +111,8 @@ async function compose(req,res){
         subject :  req.body.subject,
         content : req.body.content,
         status: status,
+        lastStatus: lastStatus,
+        attachment : file,
         date: new Date(),
     });
 
@@ -92,5 +130,8 @@ module.exports = {
     trash,
     viewMail,
     moveToTrash,
+    undoFromTrash,
+    deleteFromTrash,
+    AllMail,
 
 }

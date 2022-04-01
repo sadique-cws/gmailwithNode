@@ -7,11 +7,15 @@ var session =require("express-session");
 var urLencoded = bodyParser.urlencoded({extended:false})
 require("express-dynamic-helpers-patch")(app);
 
+
 app.dynamicHelpers({session:function(req,res){
     return req.session;
 }})
 
+
+
 connect
+app.locals.moment = require("moment")
 
 app.use(express.json());
 app.use(urLencoded)

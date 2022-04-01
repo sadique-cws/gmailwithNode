@@ -15,5 +15,5 @@ block content
                                 a(href=`/view/${mail._id}`).text-decoration-none.text-dark
                                     strong=mail.subject
                                         span.small.fw-lighter.ms-2=mail.content
-                            td=mail.date
+                            td=moment(mail.date).fromNow()
                 
