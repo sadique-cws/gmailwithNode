@@ -13,6 +13,9 @@ block content
                         if mail.status == -1
                             a.btn.btn-success.btn-sm(href=`/undo-from-trash/${mail._id}`) Undo
                             a.btn.btn-danger.btn-sm.ms-2(href=`/delete-from-trash/${mail._id}`) Delete
+                        else if mail.status == 0
+                            a.btn.btn-success.btn-sm.mx-2(href=`/send-from-draft/${mail._id}`) Send Mail
+                            a.btn.btn-danger.btn-sm(href=`/move-to-trash/${mail._id}`) Move to trash
                         else 
                             a.btn.btn-danger.btn-sm(href=`/move-to-trash/${mail._id}`) Move to trash
                         
@@ -20,6 +23,16 @@ block content
                 h6 From : #{mail.senderId.fname}
                 small.text-muted=moment(mail.date).fromNow()
                 p.lead=mail.content
+                .mt-2 
+                    if mail.attachment != "false"
+                        .row 
+                            .col-5 
+                                .card.shadow
+                                    .card-body 
+                                        img(src=`/${mail.attachment}`, alt="").w-100
+                                        p.small.mb-0=mail.attachment
+                                        a(href=`/${mail.attachment}`,target="_blank").small.m-2.text-decoration-none View 
+                                        a(href=`/${mail.attachment}`,download).small.m-2.text-decoration-none Download
 
                 
                 

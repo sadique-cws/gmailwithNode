@@ -1,8 +1,8 @@
 var express = require("express");
 const { body, validationResult, check } = require('express-validator');
 const { HomePage,Login, Signup, loginAction, Logout } = require("../controllers/AccountController");
-const {Inbox, compose, OutBox,draft,trash, viewMail, moveToTrash, undoFromTrash, deleteFromTrash, AllMail}  = require("../controllers/GmailController");
-const isAuth = require("../middleware/auth");
+const {Inbox, compose, OutBox,draft,trash, viewMail, moveToTrash, undoFromTrash, deleteFromTrash, AllMail,sendFromDraft}  = require("../controllers/GmailController");
+const {isAuth} = require("../middleware/auth");
 var router = express.Router()
 const upload = require("../middleware/upload")
 
@@ -33,6 +33,7 @@ router.get("/view/:id",isAuth,viewMail);
 router.get("/move-to-trash/:id",isAuth,moveToTrash);
 router.get("/undo-from-trash/:id",isAuth,undoFromTrash);
 router.get("/delete-from-trash/:id",isAuth,deleteFromTrash);
+router.get("/send-from-draft/:id",isAuth,sendFromDraft);
 
 
 

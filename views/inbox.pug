@@ -14,6 +14,11 @@ block content
                             td
                                 a(href=`/view/${mail._id}`).text-decoration-none.text-dark
                                     strong=mail.subject
-                                    span.small.fw-lighter.ms-2=mail.content 
-                            td=moment(mail.date).fromNow()
+                                    span.small.fw-lighter.ms-2=mail.content
+                                     
+                            td
+                                span=moment(mail.date).fromNow()
+                                if mail.attachment != "false"
+                                        span.text-danger.ms-4
+                                            i.bi.bi-paperclip
                 

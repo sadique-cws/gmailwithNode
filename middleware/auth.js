@@ -10,10 +10,11 @@ function isAuth(req,res,next){
                 res.redirect("/login");
             }
             else{
+                req.session.user = user;
                 return next();
             }
         }
     })
 }
 
-module.exports = isAuth;
+module.exports = {isAuth};

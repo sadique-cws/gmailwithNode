@@ -14,8 +14,11 @@ app.dynamicHelpers({session:function(req,res){
 
 
 
+
 connect
 app.locals.moment = require("moment")
+
+app.locals.user;
 
 app.use(express.json());
 app.use(urLencoded)
@@ -31,8 +34,11 @@ app.use(session({
     }
 }))
 var router = require('./route/router')
+const AccountModels = require("./models/AccountsModel")
 
 app.use("/",router)
+
+app.use(express.static("./images"))
 
 
 app.set("view engine","pug")

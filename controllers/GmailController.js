@@ -89,6 +89,17 @@ async function deleteFromTrash(req,res){
        }
     });
 }
+async function sendFromDraft(req,res){
+    var id = req.params.id;
+    await MailModels.findOneAndUpdate({_id:id},{status:1}).exec(function(error,response){
+        if(error){
+            return error;
+        }
+       else{
+            return res.redirect("/inbox");
+       }
+    });
+}
 
 async function compose(req,res){
     recieverData = await AccountModels.findOne({email:req.body.to})
@@ -133,5 +144,6 @@ module.exports = {
     undoFromTrash,
     deleteFromTrash,
     AllMail,
+    sendFromDraft,
 
 }
